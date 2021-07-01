@@ -48,23 +48,27 @@ public class Dot : MonoBehaviour {
             //move to the target
             tempPosition = new Vector2(targetX, transform.position.y);
             transform.position = Vector2.Lerp(transform.position, tempPosition, .4f);
+            if(board.allDots[column, row] != this.gameObject) {
+                board.allDots[column, row] = this.gameObject;
+            }
         }
         else {
             //directly set position
             tempPosition = new Vector2(targetX, transform.position.y);
             transform.position = tempPosition;
-            board.allDots[column, row] = this.gameObject;
         }
         if (Mathf.Abs(targetY - transform.position.y) > .1) {
             //move to the target
             tempPosition = new Vector2(transform.position.x, targetY);
             transform.position = Vector2.Lerp(transform.position, tempPosition, .4f);
+            if (board.allDots[column, row] != this.gameObject) {
+                board.allDots[column, row] = this.gameObject;
+            }
         }
         else {
             //directly set position
             tempPosition = new Vector2(transform.position.x, targetY);
             transform.position = tempPosition;
-            board.allDots[column, row] = this.gameObject;
         }
     }
 
@@ -76,9 +80,11 @@ public class Dot : MonoBehaviour {
                 neighbourDot.GetComponent<Dot>().column = column;
                 row = previousRow;
                 column = previousColumn;
+            } else {
+                board.DestroyMatches();
             }
             neighbourDot = null;
-        }
+        } 
     }
 
     private void OnMouseDown() {
